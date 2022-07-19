@@ -50,7 +50,7 @@ class EngineStatus:
     STATUS_ZIP = "p7zip v16.02"
 
 PROGRESS_MAX_SIZE = 100 // 9
-PROGRESS_INCOMPLETE = ['◔', '◔', '◑', '◑', '◑', '◕', '◕']
+PROGRESS_INCOMPLETE = ['□', '□', '□', '□', '□', '□', '□']
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -206,18 +206,18 @@ def get_readable_message():
                     upspeed_bytes += float(spd.split('K')[0]) * 1024
                 elif 'MB/s' in spd:
                     upspeed_bytes += float(spd.split('M')[0]) * 1048576
-        bmsg += f"\n<b>DN:</b> {get_readable_file_size(dlspeed_bytes)}/s<b> | UP:</b> {get_readable_file_size(upspeed_bytes)}/s"
+        bmsg += f"\n<b>⌈➳🔻 DN : {get_readable_file_size(dlspeed_bytes)}/s | ⌈➳🔺 UP : {get_readable_file_size(upspeed_bytes)}/s</b>"
 
         buttons = ButtonMaker()
-        buttons.sbutton("Statistics", str(THREE))
+        buttons.sbutton("🤖 𝐁𝐎𝐓 𝐒𝐓𝐀𝐓𝐈𝐒𝐓𝐈𝐂𝐒", str(THREE))
         sbutton = InlineKeyboardMarkup(buttons.build_menu(1))
 
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
-            msg += f"<b>Tasks:</b> {tasks}\n"
+            msg += f"\n\n<b>⌈➳ 📭 Running Tasks : {tasks}</b>\n"
             buttons = ButtonMaker()
-            buttons.sbutton("◀️", "status pre")
+            buttons.sbutton("⏪ Previous", "status pre")
             buttons.sbutton(f"{PAGE_NO}/{pages}", str(THREE))
-            buttons.sbutton("▶️", "status nex")
+            buttons.sbutton("Next ⏩", "status nex")
             button = InlineKeyboardMarkup(buttons.build_menu(3))
             return msg + bmsg, button
         return msg + bmsg, sbutton
