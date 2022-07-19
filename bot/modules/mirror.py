@@ -82,7 +82,7 @@ class MirrorListener:
             try:
                 with download_dict_lock:
                     download_dict[self.uid] = ZipStatus(name, m_path, size, self.message)
-                path = f"{m_path}.zip"
+                path = f"{m_path}.zip" 
                 LOGGER.info(f'Zip: orig_path: {m_path}, zip_path: {path}')
                 if self.pswd is not None:
                     if self.isLeech and int(size) > TG_SPLIT_SIZE:
@@ -186,7 +186,7 @@ class MirrorListener:
             except Exception as e:
                 LOGGER.error(str(e))
             count = len(download_dict)
-        msg = f"{self.tag} your download has been stopped due to: {error}"
+        msg = f"<b>🗣️ {self.tag} your download has been stopped due to: {error}</b>"
         sendMessage(msg, self.bot, self.message)
         if count == 0:
             self.clean()
@@ -200,40 +200,46 @@ class MirrorListener:
         buttons = ButtonMaker()
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        msg = f"<b>Name: </b><code>{escape(name)}</code>\n<b>Size: </b>{size}"
+        msg = f"<b>⌈➳📂 File Name : {escape(name)}</b>\n\n<b>⌈➳💽 Size : {size}</b>"
         if self.isLeech:
             if BOT_PM:
                 bot_d = bot.get_me()
                 b_uname = bot_d.username
                 botstart = f"http://t.me/{b_uname}"
-                buttons.buildbutton("View file in PM", f"{botstart}")
-            msg += f'\n<b>Total Files: </b>{folders}'
+                buttons.buildbutton("👀 𝗩𝗜𝗘𝗪 𝗙𝗜𝗟𝗘 𝗜𝗡 𝗕𝗢𝗧 𝗣𝗠 👀", f"{botstart}")
+            msg += f'\n<b>⌈➳🗃️ Total Files : {folders}</b>'
             if typ != 0:
-                msg += f'\n<b>Corrupted Files: </b>{typ}'
-            msg += f'\n<b>User: {self.tag}</b>'
-            msg += f'\n<b>Time:</b> {get_readable_time(time() - self.message.date.timestamp())}'
+                msg += f'\n<b>⌈➳📚 Corrupted Files : {typ}</b>'
+            msg += f'\n<b>⌈➳⏰ Time : {get_readable_time(time() - self.message.date.timestamp())}</b>'
+            msg += f'\n<b>⌈➳🗣️ Lᴇᴇᴄʜᴇᴅ Bʏ : {self.tag}\n\n⌈➳🎭 𝐎𝐖𝐍𝐄𝐑 : #𝗪𝗵𝗶𝘁𝗘_𝗗𝗲𝘃𝗶𝗟𝟬𝟵</b>'
             if not files:
                 sendMessage(msg, self.bot, self.message)
             else:
-                fmsg = '\n<b>Your Files:</b>\n'
+                fmsg = '\n\n<b>⌈➳📂 Your Files Here 👇</b>\n\n'
                 for index, (link, name) in enumerate(files.items(), start=1):
-                    fmsg += f"{index}. <a href='{link}'>{name}</a>\n"
+                    fmsg += f"<b>{index}. <a href='{link}'>{name}</a></b>\n\n"
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         sendMessage(msg + fmsg, self.bot, self.message)
                         sleep(1)
                         fmsg = ''
                 if fmsg != '':
-                    sendMessage(msg + fmsg, self.bot, self.message)
+                    if BOT_PM and self.message.chat.type != 'private':
+                        fmsg += "📂 𝘾𝙝𝙚𝙘𝙠 𝙔𝙤𝙪𝙧 𝙁𝙞𝙡𝙚 𝙄𝙣 𝘽𝙤𝙩 𝙋𝙈 𝙊𝙧 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡...!!!"
+                        sendMarkup(msg + fmsg, self.bot, self.message, InlineKeyboardMarkup(buttons.build_menu(1)))
+                    else:
+                        sendMessage(msg + fmsg, self.bot, self.message)
         else:
-            msg += f'\n<b>Type: </b>{typ}'
+            msg += f'\n<b>⌈➳📦 Type : {typ}</b>'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
-                msg += f'\n<b>SubFolders: </b>{folders}'
-                msg += f'\n<b>Files: </b>{files}'
-            msg += f'\n<b>User: {self.tag}</b>'
-            msg += f'\n<b>Time:</b> {get_readable_time(time() - self.message.date.timestamp())}'
+                msg += f'\n<b>⌈➳🗂️ SubFolders : {folders}</b>'
+                msg += f'\n<b>⌈➳🗃️ Files : {files}</b>'
+            msg += f'\n<b>⌈➳🗣️ Mɪʀʀᴏʀᴇᴅ Bʏ : {self.tag}</b>'
+            msg += f'\n<b>⌈➳⏰ Time : {get_readable_time(time() - self.message.date.timestamp())}</b>' 
+            msg += f'\n\n<b>⌈➳🎭 𝐎𝐖𝐍𝐄𝐑 : #𝗪𝗵𝗶𝘁𝗘_𝗗𝗲𝘃𝗶𝗟𝟬𝟵</b>'
+            msg += f'\n\n<b> Available Your Mirror Link Your PM All So</b>'
             buttons = ButtonMaker()
             link = short_url(link)
-            buttons.buildbutton("☁️ Drive Link", link)
+            buttons.buildbutton("💾 Drive Link 💾", link)
             LOGGER.info(f'Done Uploading {name}')
             if INDEX_URL is not None:
                 url_path = rutils.quote(f'{name}')
@@ -241,10 +247,10 @@ class MirrorListener:
                 if ospath.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{name}'):
                     share_url += '/'
                     share_url = short_url(share_url)
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("🚀 Index Link 🚀", share_url)
                 else:
                     share_url = short_url(share_url)
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("🚀 Index Link 🚀", share_url)
                     if VIEW_LINK:
                         share_urls = f'{INDEX_URL}/{url_path}?a=view'
                         share_urls = short_url(share_urls)
@@ -297,7 +303,7 @@ class MirrorListener:
             try:
                 reply_to.delete()
             except Exception as error:
-                LOGGER.warning(f"ewww {error}")
+                LOGGER.warning(f"ewww {error}")          
         e_str = error.replace('<', '').replace('>', '')
         clean_download(f'{DOWNLOAD_DIR}{self.uid}')
         with download_dict_lock:
