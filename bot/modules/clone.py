@@ -68,7 +68,7 @@ def _clone(message, bot, multi=0):
     is_appdrive = is_appdrive_link(link)
     if is_gdtot:
         try:
-            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            msg = sendMessage(f"𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗚𝗗𝗧𝗢𝗧 𝗟𝗶𝗻𝗸𝘀 :\n\n<b>{link}</b>", bot, message)
             link = gdtot(link)
             LOGGER.info(f"Processing GdToT: {link}")
             deleteMessage(bot, msg)
@@ -76,7 +76,7 @@ def _clone(message, bot, multi=0):
             deleteMessage(bot, msg)
             return sendMessage(str(e), bot, message)
     if is_appdrive:
-        msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+        msg = sendMessage(f"𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗔𝗣𝗣 𝗗𝗥𝗜𝗩𝗘 𝗟𝗶𝗻𝗸𝘀 :\n\n<b>{link}</b>", bot, message)
         try:
             apdict = appdrive(link)
             link = apdict.get('gdrive_link')
@@ -94,7 +94,7 @@ def _clone(message, bot, multi=0):
             LOGGER.info('Checking File/Folder if already in Drive...')
             smsg, button = gd.drive_list(name, True, True)
             if smsg:
-                msg3 = "Someone already mirrored it for you !\nHere you go:"
+                msg3 = "<b>Someone already cloned it for you !\nHere you go:"
                 return sendMarkup(msg3, bot, message, button)
         if CLONE_LIMIT is not None:
             LOGGER.info('Checking File/Folder Size...')
