@@ -99,7 +99,7 @@ class TelegramDownloadHelper:
                     LOGGER.info('Checking File/Folder if already in Drive...')
                     smsg, button = GoogleDriveHelper().drive_list(name, True, True)
                     if smsg:
-                        msg = "Someone already mirrored it for you.\nHere you go:"
+                        msg = "<b>🧲 Someone already mirrored it for you..!! Here you go 👇</b>"
                         return sendMarkup(msg, self.__listener.bot, self.__listener.message, button)
                 if STORAGE_THRESHOLD is not None:
                     arch = any([self.__listener.isZip, self.__listener.extract])
@@ -112,7 +112,7 @@ class TelegramDownloadHelper:
                 LOGGER.info(f'Downloading Telegram file with id: {media.file_unique_id}')
                 self.__download(_dmsg, path)
             else:
-                self.__onDownloadError('File already being downloaded!')
+                self.__onDownloadError('<b>File already being downloaded!</b>')
         else:
             self.__onDownloadError('No document in the replied message')
 
