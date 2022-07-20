@@ -351,7 +351,7 @@ def bot_sys_stats():
                 num_extract += 1
        if stats.status() == MirrorStatus.STATUS_SPLITTING:
                 num_split += 1
-    stats = f"Bot Statistics"
+    stats = "Bot Statistics"
     stats += f"""
 
 Bot Uptime: {currentTime}
@@ -362,5 +362,5 @@ Used: {used} [{disk}%]
 """
     return stats
 dispatcher.add_handler(
-    CallbackQueryHandler(pop_up_stats, pattern="^" + str(THREE) + "$")
+        CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$")
 )
