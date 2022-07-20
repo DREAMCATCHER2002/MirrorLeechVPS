@@ -68,7 +68,7 @@ def _clone(message, bot, multi=0):
     is_appdrive = is_appdrive_link(link)
     if is_gdtot:
         try:
-            msg = sendMessage(f"𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗚𝗗𝗧𝗢𝗧 𝗟𝗶𝗻𝗸𝘀 :\n\n<b>{link}</b>", bot, message)
+            msg = sendMessage(f"🔗 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗚𝗗𝗧𝗢𝗧 𝗟𝗶𝗻𝗸𝘀...\n\n<b>{link}</b>", bot, message)
             link = gdtot(link)
             LOGGER.info(f"Processing GdToT: {link}")
             deleteMessage(bot, msg)
@@ -76,7 +76,7 @@ def _clone(message, bot, multi=0):
             deleteMessage(bot, msg)
             return sendMessage(str(e), bot, message)
     if is_appdrive:
-        msg = sendMessage(f"𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗔𝗣𝗣 𝗗𝗥𝗜𝗩𝗘 𝗟𝗶𝗻𝗸𝘀 :\n\n<b>{link}</b>", bot, message)
+        msg = sendMessage(f"🔗 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗬𝗼𝘂𝗿 𝗔𝗣𝗣𝗗𝗥𝗜𝗩𝗘 𝗟𝗶𝗻𝗸𝘀...\n\n<b>{link}</b>", bot, message)
         try:
             apdict = appdrive(link)
             link = apdict.get('gdrive_link')
@@ -94,7 +94,7 @@ def _clone(message, bot, multi=0):
             LOGGER.info('Checking File/Folder if already in Drive...')
             smsg, button = gd.drive_list(name, True, True)
             if smsg:
-                msg3 = "<b>Someone already cloned it for you !\nHere you go:"
+                msg3 = "<b>🔄 Someone already cloned it for you..!! \nHere you go 👇</b>"
                 return sendMarkup(msg3, bot, message, button)
         if CLONE_LIMIT is not None:
             LOGGER.info('Checking File/Folder Size...')
@@ -110,7 +110,7 @@ def _clone(message, bot, multi=0):
             sleep(4)
             Thread(target=_clone, args=(nextmsg, bot, multi)).start()
         if files <= 20:
-            msg = sendMessage(f"Cloning: <code>{link}</code>", bot, message)
+            msg = sendMessage(f"<b>🔄 𝗖𝗹𝗼𝗻𝗶𝗻𝗴 𝘁𝗼 𝗚-𝗗𝗿𝗶𝘃𝗲...\n\n<b>{link}</b>", bot, message)
             result, button = gd.clone(link)
             deleteMessage(bot, msg)
         else:
@@ -133,7 +133,7 @@ def _clone(message, bot, multi=0):
                     update_all_messages()
             except IndexError:
                 pass
-        cc = f'\n\n<b>{tag}</b>'
+        cc = f'\n<b>⌈➳🗣️ 𝗨𝘀𝗲𝗿 : {tag}</b>\n\n⌈➳🎭 𝐎𝐖𝐍𝐄𝐑 : #𝗪𝗵𝗶𝘁𝗘_𝗗𝗲𝘃𝗶𝗟𝟬𝟵'
         if button in ["cancelled", ""]:
             sendMessage(f"{tag} {result}", bot, message)
         else:
@@ -146,7 +146,7 @@ def _clone(message, bot, multi=0):
                 LOGGER.info(f"Deleting: {link}")
                 gd.deletefile(link)
     else:
-        sendMessage('Send Gdrive or GDToT/AppDrive link along with command or by replying to the link by command', bot, message)
+        sendMessage('<b>📨 Send Gdrive or GDToT/AppDrive link along with command or by replying to the link by command 🤗</b>', bot, message)
 
 @new_thread
 def cloneNode(update, context):
