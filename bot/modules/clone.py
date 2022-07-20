@@ -94,7 +94,7 @@ def _clone(message, bot, multi=0):
             LOGGER.info('Checking File/Folder if already in Drive...')
             smsg, button = gd.drive_list(name, True, True)
             if smsg:
-                msg3 = "<b>🔄 Someone already cloned it for you..!! \nHere you go 👇</b>"
+                msg3 = "<b>🔄 Someone already cloned it for you..!! Here you go 👇</b>"
                 return sendMarkup(msg3, bot, message, button)
         if CLONE_LIMIT is not None:
             LOGGER.info('Checking File/Folder Size...')
@@ -133,7 +133,7 @@ def _clone(message, bot, multi=0):
                     update_all_messages()
             except IndexError:
                 pass
-        cc = f'\n<b>⌈➳🗣️ 𝗨𝘀𝗲𝗿 : {tag}</b>\n\n⌈➳🎭 𝐎𝐖𝐍𝐄𝐑 : #𝗪𝗵𝗶𝘁𝗘_𝗗𝗲𝘃𝗶𝗟𝟬𝟵'
+        cc = f'\n<b>⌈➳🗣️ 𝗨𝘀𝗲𝗿 : {tag}\n\n⌈➳🎭 𝐎𝐖𝐍𝐄𝐑 : #𝗪𝗵𝗶𝘁𝗘_𝗗𝗲𝘃𝗶𝗟𝟬𝟵</b>'
         if button in ["cancelled", ""]:
             sendMessage(f"{tag} {result}", bot, message)
         else:
